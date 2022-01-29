@@ -23,7 +23,7 @@ Skip_List::Skip_List(std::vector<double> v) {
 	for (double x : v) insert(x);
 };
 
-std::string Skip_List::get_representation() const {
+std::string Skip_List::print_levels() const {
 	std::string out = "";
 	for (int i = levels_count() - 1; i >= 0; i--) {
 		Node* head = levels[i].head;
@@ -40,6 +40,55 @@ std::string Skip_List::get_representation() const {
 			if (p == sentinel) break;
 		}
 
+		out += "\n";
+	}
+
+	return out;
+}
+
+std::string Skip_List::get_representation(int num_sz) const {
+	// num_sz is length of number as string
+	std::vector<std::vector<std::string>> nums;
+	std::string out = "";
+
+	// loop through main list
+	for (Node* p = levels[0].head; true; p = p->next()) {
+		nums.push_back({});
+		bool is_sent = p == levels[0].sentinel;
+		bool is_head = nums.size() == 1;
+		int count = 0;
+
+		// each column
+		for (Node* q = p; q; q = q->ceil(), count++) {
+			std::string pt = "> " + std::to_string(q->get()) + " <";
+			
+			if (is_head) pt = "-INF <";
+			if (is_sent) pt = "> INF";
+
+			int sz = pt.size();
+			int to_add = num_sz - sz;
+			// trail numbers with dashes to match size
+			for (int i = 0; !is_sent && !is_head && i < to_add; i++) pt += "-";
+
+			nums[nums.size() - 1].push_back(pt);
+		}
+
+		// empty numbers in columns
+		for (int j = 0; j < (levels_count() - count); j++) {
+			std::string str(num_sz, '-');
+			nums[nums.size() - 1].push_back(str);
+		}
+
+		if (p == levels[0].sentinel) break;
+	}
+
+	// loop through top to bottom levels
+	for (int i = levels_count() - 1; i >= 0; i--) {
+		// ith element of kth level
+		for (int k = 0; k < nums.size(); k++) {
+			out += nums[k][i];
+			if (k != nums.size()-1) out += "--"; // arrows between numbers
+		}
 		out += "\n";
 	}
 
