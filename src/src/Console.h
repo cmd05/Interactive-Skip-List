@@ -4,9 +4,10 @@
 
 class Console {
 public:
-	Console(Skip_List list) : skip_list{ list } {}
+	Console(Skip_List list, std::string f = "") : skip_list{ list }, file{f} {}
 	void run();
-	void write_to_file(std::string file) const;
+	bool write_to_file(std::string f) const;
 private:
 	Skip_List skip_list;
+	std::string file = "";
 };
