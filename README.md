@@ -2,14 +2,21 @@
 
 C++ implementation of a skip list data-structure, along with an interactive console to visualize and experiment with the list.
 
+```
+-INF <--> -59.000000 <--------------------> -1.000000 <-------------------------------------------------------> INF
+-INF <--> -59.000000 <--------------------> -1.000000 <---------------------> 48.000000 <---------------------> INF
+-INF <--> -59.000000 <--------------------> -1.000000 <---------------------> 48.000000 <---------------------> INF
+-INF <--> -59.000000 <---> -28.000000 <---> -1.000000 <----> 15.000000 <----> 48.000000 <----> 90.000000 <----> INF
+```
+
 ## Demo
 <p align="center">
-    <img src='https://user-images.githubusercontent.com/63466463/151427495-beff78d5-ede2-47df-b747-568371504a0c.gif'>
+    <img src='https://user-images.githubusercontent.com/63466463/151653318-a2aa3f00-5efd-4c79-bd79-1242eaaaf3e0.gif'>
 </p>
 
 ## Example
 ```cpp
-std::vector<double> v = { 90, 15, -59, 48, -1, -28 };
+std::vector<double> v = {90, 15, -59, 48, -1, -28};
 Skip_List skip_list{v};
 
 /// Operations
@@ -19,7 +26,7 @@ Node* node = skip_list.search(-1);
 skip_list.remove(5);
 
 /// Console
-Console console{ skip_list };
+Console console{skip_list, "output.txt"};
 console.write_to_file("output.txt");
 console.run();
 ```
